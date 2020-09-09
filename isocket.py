@@ -44,6 +44,9 @@ class Socket(pyinotify.ProcessEvent):
 		self.listening = True
 		self.notifier.start()
 
+	def accept(self):
+		pass
+
 	def close(self):
 		""" Close the connection and removes the socket file. """
 		if self.file:
@@ -51,7 +54,8 @@ class Socket(pyinotify.ProcessEvent):
 		os.system('rm ./active/%s' % self.address)
 
 	def send(self, data):
-		self.file.write(data)
+		with open('./active/%s' % self.address, 'w') as file:
+			file.write(data)
 
 	def recv(self):
 
